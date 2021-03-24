@@ -4,11 +4,12 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class Driver {
 	
 	static HashMap<String, Integer> uniqueWordCount;
-
+	
 	public static void main(String[] args) {
 		
 		
@@ -16,28 +17,40 @@ public class Driver {
 			for( int j = 0; j < args.length; j++)
 			{
 				
-				System.out.println(args[j].toUpperCase());
+				
 				
 				Scanner scan;
 				scan = new Scanner( new FileReader(args[j]) );
 			
 				uniqueWordCount = new HashMap<String, Integer>();
 				ArrayList<String> temp = new ArrayList<String>();
-		
+				int line = 0;
+				int charNum = 0;
+				
 				while( scan.hasNextLine() )
 				{
-					temp = parseLine(scan.nextLine());	
+					String fileLine = scan.nextLine();
+					temp = parseLine(fileLine);	
+					charNum = numOfChars(fileLine, charNum);
 					countUniqueWords(temp);
+					line++;
 				}
+				charNum = charNum + line - 1;
 				scan.close();
-				
-				printHashmap();
+
+				printData(args[j],line, charNum);
 			}
 		
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}		
 
+	}
+	
+	public static int numOfChars( String line, int charNum )
+	{
+		int val = charNum + line.length();
+		return val;
 	}
 	
 	
@@ -48,14 +61,14 @@ public class Driver {
 		String[] tokens = line.split("[\\p{Punct}\\s]+");	
 		for(int i = 0; i < tokens.length; i++ )
 		{
-			val = formatWord(tokens[i]);
+			val = removeWhiteSpace(tokens[i]);
 			if( !val.isBlank() && !val.matches("-?(0|[1-9]\\d*)"))
 				arr.add(val);
 		}
 		return arr;
 	}
 	
-	public static String formatWord(String str)
+	public static String removeWhiteSpace(String str)
 	{
 		String val = str.replaceAll("\\W", "").toLowerCase();
 		return val;
@@ -78,11 +91,15 @@ public class Driver {
 
 	}
 
-	public static void printHashmap()
+	public static void printData(String filename, int line, int charNum)
 	{
+		System.out.println("FILENAME: " + filename.toUpperCase());
+		System.out.println("NO. OF LINES: " + line);
+		System.out.println("NO. OF CHARACTERS: " + charNum);
+		System.out.println("UNIQUE WORD FREQUENCY:");
 		for( String value : uniqueWordCount.keySet())
 		{
-			System.out.println(value.toUpperCase() + ": " + uniqueWordCount.get(value));
+			System.out.println("\t" + value.toUpperCase() + ": " + uniqueWordCount.get(value));
 		}
 		
 	}

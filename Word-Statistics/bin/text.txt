@@ -7,7 +7,7 @@ March 24, 2021
                      Z Language Specifications
                            Version 1.0
 
-Concept Definition
+Concept Definitions
 
 Function X Requirements
 
