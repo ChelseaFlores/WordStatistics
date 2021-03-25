@@ -25,10 +25,10 @@ To clone the Github repository, enter the follow command in the command line: gi
 
 Otherwise, extract the code from the zip file and cd into the WordStatistics folder using cd in the command line.
 
-Then, cd into the src code using the following command line: cd WordStatistics/Word-Statistics/src
+Then, cd into the src code folder using the following command line: cd WordStatistics/Word-Statistics/src
 
 Compile the code with the command line: javac Driver.java
 
-Execute the program by typing java, the file and then any text files you want the program to analyze with spaces between each filename. Sample text documents have be provided. Example command line: java Driver.java text.txt
+Execute the program by typing java, the java filename and then any text files you want the program to analyze with spaces between each filename. Sample text documents have be provided. Command line example: java Driver.java text.txt
 
 The program will then go through each argument (file), perform the required functionality and print to stdout.
