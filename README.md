@@ -1,21 +1,21 @@
 # WordStatistics
 
-# Project Topic
+## Project Topic
 
-This program performs word statics. The functionality currently required is to count the frequency of each unique word, count the number of lines and count the number of chars.
+This program performs word statisics. The functionality currently required is to count the frequency of each unique word, count the number of lines and count the number of chars.
 
-# Version History
+## Version History
 
 | Name          | Date           | Reason for Changes     |Version  |
 | ------------- | -------------- |------------------------|---------|
 | Version 1.0   | March 22, 2021 | Initial Program        | 1.0     |
 | Version 1.1   | March 24, 2021 | Add Count lines & chars| 1.1     |
 
-# GitHub Link
+## GitHub Link
 
 https://github.com/ChelseaFlores/WordStatistics
 
-# How to Run
+## How to Run
 
 The precondition for running this program is having java installed on the computer executing the code.
 
