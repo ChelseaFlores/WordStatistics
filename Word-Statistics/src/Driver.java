@@ -1,47 +1,56 @@
 import java.util.Scanner;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 public class Driver {
 	
 	static HashMap<String, Integer> uniqueWordCount;
+	static HashMap<Integer, String> replacedLines;
 	
 	public static void main(String[] args) {
 		
 		
 		try {
-			for( int j = 0; j < args.length; j++)
+
+			String patternWord = args[0];
+			String replacementWord = args[1];
+			
+			for( int j = 2; j < args.length; j++)
 			{
 				
-				
+				File f = new File("text.txt");
+				String path = f.getAbsolutePath();
 				
 				Scanner scan;
-				scan = new Scanner( new FileReader(args[j]) );
+				scan = new Scanner( new FileReader(args[j]) );//
 			
+				replacedLines = new HashMap<Integer, String>();
 				uniqueWordCount = new HashMap<String, Integer>();
 				ArrayList<String> temp = new ArrayList<String>();
-				int line = 0;
+
+				int numOfLine = 0;
 				int charNum = 0;
 				
 				while( scan.hasNextLine() )
 				{
-					String fileLine = scan.nextLine();
-					temp = parseLine(fileLine);	
-					charNum = numOfChars(fileLine, charNum);
+					String line = scan.nextLine();
+					numOfLine++;
+					replaceWord(numOfLine, line, patternWord, replacementWord);
+					temp = parseLine(line);	
+					charNum = numOfChars(line, charNum);
 					countUniqueWords(temp);
-					line++;
 				}
-				charNum = charNum + line - 1;
+				charNum = charNum + numOfLine - 1;
 				scan.close();
 
-				printData(args[j],line, charNum);
+				printData(path,numOfLine, charNum);//args[j]
 			}
 		
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}		
 
@@ -61,14 +70,14 @@ public class Driver {
 		String[] tokens = line.split("[\\p{Punct}\\s]+");	
 		for(int i = 0; i < tokens.length; i++ )
 		{
-			val = removeWhiteSpace(tokens[i]);
+			val = removeNonWordChar(tokens[i]);
 			if( !val.isBlank() && !val.matches("-?(0|[1-9]\\d*)"))
 				arr.add(val);
 		}
 		return arr;
 	}
 	
-	public static String removeWhiteSpace(String str)
+	public static String removeNonWordChar(String str)
 	{
 		String val = str.replaceAll("\\W", "").toLowerCase();
 		return val;
@@ -90,6 +99,14 @@ public class Driver {
 		}
 
 	}
+	
+	public static String replaceWord(int lineNo, String line, String patternWord, String replacementWord)
+	{
+		String updatedLine = line.replaceAll("\\b"+patternWord+"\\b", replacementWord);
+		if(!line.equals(updatedLine))
+			replacedLines.put(lineNo,updatedLine);
+		return updatedLine;
+	}
 
 	public static void printData(String filename, int line, int charNum)
 	{
@@ -100,6 +117,11 @@ public class Driver {
 		for( String value : uniqueWordCount.keySet())
 		{
 			System.out.println("\t" + value.toUpperCase() + ": " + uniqueWordCount.get(value));
+		}
+		System.out.println("LINES WITH REPLACED WORDS:");
+		for( Integer val : replacedLines.keySet())
+		{
+			System.out.println("\t" + "LINE NO. " + val + ": " + replacedLines.get(val).toUpperCase());
 		}
 		
 	}
