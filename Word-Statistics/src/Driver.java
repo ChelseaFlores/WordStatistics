@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,49 +7,46 @@ import java.util.Set;
 
 public class Driver {
 	
-	static HashMap<String, Integer> uniqueWordCount;
-	static HashMap<Integer, String> replacedLines;
-	
 	public static void main(String[] args) {
 		
 		String patternWord = args[0];
 		String replacementWord = args[1];
+		
 			
 		for( int j = 2; j < args.length; j++)
 		{
-			processData(args[j], patternWord, replacementWord);
+
+			processFile(args[j], patternWord, replacementWord);
 
 		}	
 
 	}
 	
-	public static void processData(String arg, String patternWord, String replacementWord)
+	public static void processFile(String arg, String patternWord, String replacementWord)
 	{
 		try {			
 			Scanner scan;
 			scan = new Scanner( new FileReader(arg) );//
-		
-			replacedLines = new HashMap<Integer, String>();
-			uniqueWordCount = new HashMap<String, Integer>();
-			ArrayList<String> temp = new ArrayList<String>();
-	
+			HashMap<Integer, String> replacedLines = new HashMap<Integer, String>();
+			HashMap<String, Integer> uniqueWordCount = new HashMap<String, Integer>();
 			int numOfLine = 0;
 			int charNum = 0;
+			ArrayList<String> temp = new ArrayList<String>();
 			
 			while( scan.hasNextLine() )
 			{
 				String line = scan.nextLine();
 				numOfLine++;
-				replaceWord(numOfLine, line, patternWord, replacementWord);
+				replacedLines = replaceWord(numOfLine, line, patternWord, replacementWord, replacedLines);
 				temp = parseLine(line);	
 				charNum = numOfChars(line, charNum);
-				countUniqueWords(temp);
+				uniqueWordCount = countUniqueWords(temp, uniqueWordCount);
 			}
 			
-			charNum = charNum + numOfLine - 1;
+			charNum = charNum + numOfLine;
 			scan.close();
 	
-			printData(arg,numOfLine, charNum);
+			printData(arg,numOfLine, charNum, uniqueWordCount, replacedLines);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
@@ -83,32 +79,41 @@ public class Driver {
 		return val;
 	}
 	
-	public static void countUniqueWords(ArrayList<String> temp)
+	public static HashMap<String, Integer> countUniqueWords(ArrayList<String> temp, HashMap<String, Integer> uniqueWordCount)
 	{
-		int count;
-		
+		int count = 0;
+		Set<String> keys;
+
 		for(int i = 0; i < temp.size(); i++ )
 		{
-			Set<String> keys = uniqueWordCount.keySet();
-			if( keys.contains(temp.get(i)))
-				count = uniqueWordCount.get(temp.get(i)) + 1;
-			else
+			if(uniqueWordCount.isEmpty())
+			{
 				count = 1;
-				
+			}
+			else
+			{
+				keys = uniqueWordCount.keySet();
+				if( keys.contains(temp.get(i)))
+					count = uniqueWordCount.get(temp.get(i)) + 1;
+				else
+					count = 1;
+			}
+					
 			uniqueWordCount.put(temp.get(i), count);
 		}
-
+		
+		return uniqueWordCount;
 	}
 	
-	public static String replaceWord(int lineNo, String line, String patternWord, String replacementWord)
+	public static HashMap<Integer, String> replaceWord(int lineNo, String line, String patternWord, String replacementWord, HashMap<Integer,String> replacedLines)
 	{
 		String updatedLine = line.replaceAll("\\b"+patternWord+"\\b", replacementWord);
 		if(!line.equals(updatedLine))
 			replacedLines.put(lineNo,updatedLine);
-		return updatedLine;
+		return replacedLines;
 	}
 
-	public static void printData(String filename, int line, int charNum)
+	public static void printData(String filename, int line, int charNum, HashMap<String,Integer> uniqueWordCount, HashMap<Integer,String> replacedLines)
 	{
 		System.out.println("FILENAME: " + filename.toUpperCase());
 		System.out.println("NO. OF LINES: " + line);
@@ -128,8 +133,8 @@ public class Driver {
 			System.out.println("LINES WITH REPLACED WORDS:");
 			for( Integer val : replacedLines.keySet())
 			{
-				System.out.println("\t" + "LINE NO. " + val + ": " + replacedLines.get(val).toUpperCase());
+				System.out.println("\t" + "LINE NO. " + val + ": " + replacedLines.get(val));
 			}
 		}
 	}
-}	
+}		
