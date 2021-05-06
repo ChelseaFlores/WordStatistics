@@ -13,47 +13,47 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		
-		
-		try {
-
-			String patternWord = args[0];
-			String replacementWord = args[1];
+		String patternWord = args[0];
+		String replacementWord = args[1];
 			
-			for( int j = 2; j < args.length; j++)
+		for( int j = 2; j < args.length; j++)
+		{
+			processData(args[j], patternWord, replacementWord);
+
+		}	
+
+	}
+	
+	public static void processData(String arg, String patternWord, String replacementWord)
+	{
+		try {			
+			Scanner scan;
+			scan = new Scanner( new FileReader(arg) );//
+		
+			replacedLines = new HashMap<Integer, String>();
+			uniqueWordCount = new HashMap<String, Integer>();
+			ArrayList<String> temp = new ArrayList<String>();
+	
+			int numOfLine = 0;
+			int charNum = 0;
+			
+			while( scan.hasNextLine() )
 			{
-				
-				File f = new File("text.txt");
-				String path = f.getAbsolutePath();
-				
-				Scanner scan;
-				scan = new Scanner( new FileReader(args[j]) );//
-			
-				replacedLines = new HashMap<Integer, String>();
-				uniqueWordCount = new HashMap<String, Integer>();
-				ArrayList<String> temp = new ArrayList<String>();
-
-				int numOfLine = 0;
-				int charNum = 0;
-				
-				while( scan.hasNextLine() )
-				{
-					String line = scan.nextLine();
-					numOfLine++;
-					replaceWord(numOfLine, line, patternWord, replacementWord);
-					temp = parseLine(line);	
-					charNum = numOfChars(line, charNum);
-					countUniqueWords(temp);
-				}
-				charNum = charNum + numOfLine - 1;
-				scan.close();
-
-				printData(path,numOfLine, charNum);//args[j]
+				String line = scan.nextLine();
+				numOfLine++;
+				replaceWord(numOfLine, line, patternWord, replacementWord);
+				temp = parseLine(line);	
+				charNum = numOfChars(line, charNum);
+				countUniqueWords(temp);
 			}
-		
+			
+			charNum = charNum + numOfLine - 1;
+			scan.close();
+	
+			printData(arg,numOfLine, charNum);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
-
+		}	
 	}
 	
 	public static int numOfChars( String line, int charNum )
@@ -118,11 +118,18 @@ public class Driver {
 		{
 			System.out.println("\t" + value.toUpperCase() + ": " + uniqueWordCount.get(value));
 		}
-		System.out.println("LINES WITH REPLACED WORDS:");
-		for( Integer val : replacedLines.keySet())
-		{
-			System.out.println("\t" + "LINE NO. " + val + ": " + replacedLines.get(val).toUpperCase());
-		}
 		
+		if(replacedLines.isEmpty())
+		{
+			System.out.println("NO WORDS REPLACED");
+		}
+		else
+		{
+			System.out.println("LINES WITH REPLACED WORDS:");
+			for( Integer val : replacedLines.keySet())
+			{
+				System.out.println("\t" + "LINE NO. " + val + ": " + replacedLines.get(val).toUpperCase());
+			}
+		}
 	}
 }	
