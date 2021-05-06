@@ -1,0 +1,135 @@
+Chelsea Flores Young (rue750)
+Course Project Check Point
+CS5103-Software Engineering
+March 24, 2021
+
+                          	Word Statistics: 
+                     	   Z Language Specifications
+                           	Version 1.2
+
+Textual Description:
+	Purpose: Break text into words, count frequency of unique words, count number of chars, count number of lines, and perform a find/replace given a pattern word and replacement word.
+	A text is a sequence of characters.
+	A character can be a non-blank and a blank.
+	Blanks consist of spaces, line breaks and tabs.
+	Non-blanks consist of letters, numbers and punctuation.
+	A word is a sequence of letters, excluding trailing punctuation.
+	A separator is one or more blank characters.
+	A pattern word specified by the user is the word existing in the text file that needs to be replaced.
+	A replacement word specified by the user is the word that replaces the pattern word.
+
+Concept Definitions:
+	char == [CHAR] (CHAR defined as all characters)
+	blank == [space, line break, tabs]
+	non-blank == [letters, numbers, punctuation]
+	punctuation == [!"#$%&'()*+,-./:;<=>?@[\]^_`{|}]
+	TEXT == seq char
+	LINE == seq1 (char \ line break)
+	SEPARATOR == seq1 blank
+	WORD == seq1 (char \ blank)
+	*seq is a sequence of elements and seq1 is a non-empty sequences
+
+Requirement of function Main:
+	TEXT -> <N,N,N>
+	\forall text:TEXT
+	 	Main text = <countUniqueWords text, numOfChar text, numOfLine text>
+
+Requirement of function numOfLine:
+	Text -> N
+	\forall l:TEXT, r: TEXT, b: line break
+		numOfLine <> = 0
+		numOfLine LINE = 1
+		numOfLine lbr = numOfLine l + numOfLine r
+
+Requirement of function numOfChar:
+	numOfChar: LINE?
+	LINE -> N
+	\forall l: char, r: char
+		numOfChar <> = 0
+		numOfChar = 1
+		numOfChar = numOfChar l + numOfChar r
+
+Requirement of function words:
+	\forall s:SPACE; w:WORD; l,r: TEXT
+		words <> = <> &
+		words s = <> &
+		words w = <w>&
+		words(sr) = words r&
+		words(ls) = words l&
+
+Requirement of function parseLine:
+	LINE -> seq1 WORD
+
+	\forall line:LINE
+		parseLine line = words line
+
+Requirement of function removePunctuation:
+	WORD = WORD - punctuation
+
+Requirement of function countUniqueWords:
+	countUniqueWords: uniqueWords = {WORD: #(word file)}?
+	\forall file: WORD
+		if WORD -> uniqueWords then {WORD: #(word file) + 1}
+		else uniqueWords = uniqueWords + {WORD: 1}
+
+Requirement of function replaceWord:
+	seq WORD * WORD * WORD -> seq WORD
+	\forall s: WORD, p: pattern word, r: replacement word
+		if w == p: p == r
+
+LINE * WORD * WORD -> LINE
+
+Requirement of function printData:
+	file?: TEXT
+	numOfLines? = #(lines file)
+	uniqueWords? = TEXT -> WORD
+	frequency = #(word file)
+	printing: \power file
+	printing: \power numOfLines
+	printing: \power uniqueWords : frequency	
+
+
+3 parameters -> text after replacement
+string afterReplace  = replace (string original, string pattern, string replacement)
+
+
+words: TEXT -> seq WORD 
+
+    
+
+\forall s: SPACE; w: WORD; l,r: TEXT 
+
+   words <> = <> &
+
+   words s = <> &
+
+   words w = < w > &
+
+   words (sr) = words r &
+
+   words (ls) = words l &
+
+   words (lsr) = words l + words r
+
+10:35 AM
+
+replace: seq WORD * WORD * WORD -> seq WORD
+
+10:36 AM
+
+\forall s: seq WORD; pat: WORD; rep: WORD
+
+10:37 AM
+
+replace <> pat rep == <>
+
+10:38 AM
+
+replace <pat> pat rep == <rep>
+
+10:39 AM
+
+replace s == replace (head s) + replace (tail s)
+
+
+Write0Filek?:Keyd?:Datak?2domcontentscontents0Écontentsfk?,d?g

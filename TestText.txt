@@ -1,0 +1,13 @@
+This is a test file that we will use for junit Testing!
+Test should not match lowercase test for the replace
+function. We can put in punctuation like the following:
+, . $ * /. This should not affect any of the methods except
+for the char count.
+Here are some
+line breaks to see
+how they behave
+.
+1245 Numbers too.
+We will manually put together a document that shows
+frequency & line no & char count and replacement
+sentences. Let us see our results!
