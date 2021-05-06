@@ -36,11 +36,11 @@ Execute the program by typing java, the java filename, the word to replace, the 
 
 The program will then go through each argument (file), perform the required functionality, and print to stdout.
 
-##JUnit Testing
+## JUnit Testing
 
-#File Description
+# File Description
 
-#Testing Protocol
+# Testing Protocol
 
 
 
