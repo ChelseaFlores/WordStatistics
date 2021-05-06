@@ -32,9 +32,15 @@ Compile the code with the command line: javac Driver.java
 
 Execute the program by typing java, the java filename, the word to replace, the replacement word, and then any text files you want the program to analyze with spaces between each filename. Sample text documents have be provided. Command line example: java Driver.java "text" "doc" text.txt
 
+
+
 The program will then go through each argument (file), perform the required functionality, and print to stdout.
 
+##JUnit Testing
 
+#File Description
+
+#Testing Protocol
 
 
 
