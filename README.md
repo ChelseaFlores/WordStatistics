@@ -38,9 +38,8 @@ The program will then go through each argument (file), perform the required func
 
 ## JUnit Testing
 
-### File Description
-
-### Testing Protocol      
+Junit test was performed in the Eclipse IDE using the Junit 4 version. To replicate testing, clone the repositiory in Eclipse and run tests. A test file 
+is included in the repository under TestText.txt.
 
 
                     
