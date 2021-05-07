@@ -12,19 +12,21 @@ public class JUnitTest {
 
 	@Test
 	public void testFileLineCount() {
+		int lines = 0;
 		try {
 			Scanner scan = new Scanner( new FileReader("TestText.txt") );
-			int lines = 0;
+			
 			while( scan.hasNextLine() )
 			{
 				scan.nextLine();
 				lines++;
 			}	
 			scan.close();
-			assertEquals("Number of lines: ", 13, lines);
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		assertEquals("Number of lines: ", 13, lines);
 	}
 	
 	@Test
